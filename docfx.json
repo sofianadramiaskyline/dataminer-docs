@@ -73,5 +73,25 @@
     "keepFileLink": false,
     "cleanupCacheHistory": false,
     "disableGitFeatures": false
+  },
+  "pdf": {
+    "content": [
+      {
+        "files": [
+          "dataminer-overview/**.md",
+          "dataminer-overview/toc.yml"
+        ]
+      }
+      ],
+      "resource": [
+        {
+          "files": [ "dataminer-overview/images/**" ]
+        }
+      ],
+      "wkhtmltopdf": {
+        "additionalArguments": "--enable-local-file-access"
+      },
+      "dest": "_site_pdf",
+      "outline": "NoOutline"
   }
 }
