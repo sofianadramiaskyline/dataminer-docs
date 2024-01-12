@@ -10,7 +10,7 @@ uid: Web_apps_Feature_Release_10.3.3
 > [!TIP]
 > For release notes for this release that are not related to the web applications, see [General Feature Release 10.3.3](xref:General_Feature_Release_10.3.3).
 
-## Features
+## Highlights
 
 #### Dashboards app - GQI: New data sources [ID_34747] [ID_35027] [ID_34965] [ID_35058]
 
@@ -41,6 +41,8 @@ When configuring a Join operator, you can now select the *Row by row* option.
 > - The *Row by row* option will only be visible and configurable when you opened the dashboard or app with `showAdvancedSettings=true` added to the URL.
 > - Currently, the *Row by row" option is only supported for inner and left joins. If you use it for an outer or right join, an exception will be thrown.
 
+## Other features
+
 #### Monitoring app: Element name added to breadcrumbs of trend card [ID_35270]
 
 <!-- MR 10.4.0 - FR 10.3.3 -->
@@ -68,9 +70,7 @@ In the Generic Query Interface, the *Get parameter relations* data source is now
 It can be used to retrieve the parameter relationships that are stored in a model managed by a DataMiner Extension Module named *ModelHost*.
 
 > [!NOTE]
->
-> - This data source will only be available when *ModelHost* is running.
-> - Currently, the ModelHost DxM is not yet available.
+> This data source will only be available when *ModelHost* is running.
 
 ## Changes
 
@@ -131,6 +131,12 @@ From now on, a chart component will display an error when the GQI query that ret
 
 The GQI data sources *Get elements* and *Get services* will now also return alarm states.
 
+#### Support for GQI queries from Data Aggregator with ad hoc data sources [ID_35526]
+
+<!-- MR 10.4.0 - FR 10.3.3 -->
+
+GQI now supports queries from [Data Aggregator](xref:Data_Aggregator_DxM) that use ad hoc data sources.
+
 #### Enhanced performance when opening a web app [ID_35549]
 
 <!-- MR 10.2.0 [CU12] - FR 10.3.3 -->
@@ -153,9 +159,9 @@ When two queries using an external data source with a custom argument of which t
 
 #### Dashboards app: Problem when trying to open a shared dashboard [ID_35271]
 
-<!-- MR 10.4.0 - FR 10.3.3 -->
+<!-- MR 10.3.0 [CU3] - FR 10.3.3 -->
 
-When users tried to open a shared dashboard, in some cases, they would unexpectedly be presented with a login screen due to a permission issue.
+When users tried to open a shared dashboard, in some cases, they would unexpectedly be presented with a login screen because of a permission issue.
 
 Workaround: Recreate the faulty shared dashboard.
 
@@ -177,7 +183,7 @@ A number of issues regarding the Visual Overview component have been fixed.
 - In some cases, the dimensions of pop-up windows would be incorrect.
 - When a pop-up window was shown using a *VdxShape* property, in some cases, the default page would be shown instead of the page that was specified.
 
-#### Dashboards app & Low-code apps - Line & area chart component: Problems when visualizing resource availability [ID_35408]
+#### Dashboards app & Low-Code Apps - Line & area chart component: Problems when visualizing resource availability [ID_35408]
 
 <!-- MR 10.2.0 [CU12] - FR 10.3.3 -->
 
@@ -199,7 +205,7 @@ When you select the *Preserve feed selections* option for a particular dashboard
 
 Up to now, in some cases, one folder would incorrectly take over feed selections from another folder.
 
-#### Low-code apps: Problem when creating a new draft version [ID_35446]
+#### Low-Code Apps: Problem when creating a new draft version [ID_35446]
 
 <!-- MR 10.2.0 [CU12] - FR 10.3.3 -->
 
@@ -217,7 +223,7 @@ Time range feeds would trigger components more often than required, causing them
 
 When you entered an invalid value into a text box, an error message would be displayed for a very short moment, and the invalid value would incorrectly be replaced by the last valid value that was entered.
 
-#### Low-code apps: Panels of which the 'Fit to view' option was selected would incorrectly switch to mobile mode [ID_35542]
+#### Low-Code Apps: Panels of which the 'Fit to view' option was selected would incorrectly switch to mobile mode [ID_35542]
 
 <!-- MR 10.3.0 - FR 10.3.3 -->
 

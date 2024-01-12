@@ -34,8 +34,8 @@ Please note the following
     > [!NOTE]
     > In the Cube system settings, it is possible to disable the client-side search. To do so:
     >
-    > - In a system with a MySQL database, go to *System Center* > *System Settings* > *Search*, clear the checkbox next to *Enable search indexing on the client* and click the *Apply* button.
-    > - In a system with a Cassandra database, go to *System Center* > *Search & Indexing*, clear the checkbox next to *Enable search indexing on the client* and click the *Apply* button.
+    > - In a system with a Cassandra database or equivalent, go to *System Center* > *Search & Indexing*, clear the checkbox next to *Enable search indexing on the client* and click the *Apply* button.
+    > - In a system with a legacy MySQL database, go to *System Center* > *System Settings* > *Search*, clear the checkbox next to *Enable search indexing on the client* and click the *Apply* button.
     >
     > The setting will take effect as soon as you log off in Cube and then log on again.
     >
@@ -76,12 +76,7 @@ To search for an item in the DataMiner System using a DataMiner version prior to
 - First a client-side search will be done, then a server-side search. The results of the client-side search are displayed immediately. When more results return from the server, a button will be added in the top corner of the results pane, listing the number of results found. Click this button to view these additional results as well.
 
     > [!NOTE]
-    > In the Cube system settings, it is possible to disable the client-side search. To do so, in a system with a MySQL database, go to *System Center* > *System Settings* > *Search*. In a system with at least DataMiner 9.6.4 and a Cassandra database, go to *System Center* > *Search & Indexing*. Clear the checkbox next to *Enable search indexing on the client* and click the *Apply* button. The setting will take effect as soon as you log off in Cube and then log on again.
-    >
-    > However, note the following:
-    >
-    > - This is a system-wide setting, so it will be applied for all users.
-    > - If this setting is disabled, up to DataMiner 9.5.0 CU7/9.5.10, no settings will be included in the search results.
+    > In the Cube system settings, it is possible to disable the client-side search. To do so, go to *System Center* > *Search & Indexing*. (If your DMS still uses a legacy MySQL database, go to *System Center* > *System Settings* > *Search*.) Clear the checkbox next to *Enable search indexing on the client* and click the *Apply* button. The setting will take effect as soon as you log off in Cube and then log on again. Note that this is a system-wide setting, so it will be applied for all users.
 
 - Browse through the results either by scrolling, or using the *UP* and *DOWN* keys. When you select an item in the list, basic information about the item is displayed at the bottom of the navigation pane.
 
@@ -102,7 +97,7 @@ If an advanced search returns several kinds of items, it is possible to filter w
 | Search type | Description |
 |--|--|
 | Application      | DataMiner applications, including custom applications and DataMiner tools, such as the Query Executer. |
-| Document         | DataMiner documents. See [Documents](xref:documents). |
+| Document         | DataMiner documents. See [Documents](xref:About_the_Documents_module). |
 | Element          | All elements. An additional filter allows you to limit the search to elements that are monitored, in alarm, masked, or in a particular alarm state. |
 | Matrix           | Matrix elements. An additional filter allows you to limit the search to elements that are monitored, in alarm, masked, or in a particular alarm state. |
 | Parameter        | All parameters. An additional filter allows you to limit the search to parameters that are or are not trended, or to monitored parameters. |

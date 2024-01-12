@@ -36,8 +36,6 @@ The configuration data for the general or “local” database has to be specifi
 
 The following configuration is possible for the general database:
 
-- [Configuring the maintenance settings](#configuring-the-maintenance-settings)
-
 - [Keeping a database table from being checked during an upgrade](#keeping-a-database-table-from-being-checked-during-an-upgrade)
 
 - [Configuring how long parameter data are kept in the database for DMS Reporter](#configuring-how-long-parameter-data-are-kept-in-the-database-for-dms-reporter)
@@ -55,25 +53,6 @@ The following configuration is possible for the general database:
 - [Configuring the consistency level of Cassandra in a Cassandra cluster database](#configuring-the-consistency-level-of-cassandra-in-a-cassandra-cluster-database)
 
 - [Example of a general database configuration](#example-of-a-general-database-configuration)
-
-### Configuring the maintenance settings
-
-In the *Maintenance* tag, several attributes are available with which you can determine when records are removed from the table.
-
-These attributes are **only used prior to DataMiner 9.5.5 (or 9.5.6 for an SQL database)**. From DataMiner 9.5.5 onwards (or 9.5.6 for an SQL database), the settings determining how long records are kept in the database are determined in the files *DBMaintenance.xml* and *DBMaintenanceDMS.xml* instead. See [DBMaintenance.xml and DBMaintenanceDMS.xml](xref:DBMaintenance_xml_and_DBMaintenanceDMS_xml#dbmaintenancexml-and-dbmaintenancedmsxml).
-
-- **monthsToKeep**: The maximum number of months records should be kept in the table if limitByMonths is used.
-
-- **limitByMonths**: Determines whether alarms that pass the monthsToKeep threshold should be removed.
-
-- **limitByNumber**: Determines whether the number of alarms should be reduced to the \<Min> amount once the \<Max> threshold has been exceeded. Not used for Cassandra databases.
-
-The limiting options can be set to “true” or “false”. If both options are set to “true”, the records will be deleted from the table either after a certain amount of time, or as soon as the table contains a specific number of records, whichever comes first.
-
-> [!NOTE]
->
-> - We recommend configuring these settings through the Cube client interface rather than directly in the XML file. See [Configuring the database settings in Cube](xref:Configuring_the_database_settings_in_Cube).
-> - For a Cassandra (cluster) database, it is only possible to configure the limitByMonths attribute, not the limitByNumber attribute. Note also that this attribute works in a different way for Cassandra, compared to MySQL or MSSQL: if a record has been stored with a particular limitByMonths and MonthsToKeep setting, this setting permanently applies to that record in Cassandra.
 
 ### Keeping a database table from being checked during an upgrade
 
@@ -150,28 +129,6 @@ In a Cassandra general database, the timetrace table among others contains “sn
     > - In some cases, e.g. when DataMiner or Cassandra restarts, snapshots can be saved outside the default interval specified in the \<SnapshotInterval> setting.
     > - This can only be configured for a regular Cassandra database, not for a Cassandra cluster used by the entire DMS (type=CassandraCluster).
 
-- Prior to DataMiner 9.5.5, you can also configure how long alarm history slide data are kept using *DB.xml*: in the *HistorySlider.TimeToKeep* tag, specify a number of seconds between 0 and 2,147,483,647:
-
-  - If you specify 0, no history slider data will be saved.
-
-  - If you specify -1, history slider data will be saved for the period specified in the monthsToKeep attribute of the Maintenance tag. See [Configuring the maintenance settings](xref:DB_xml#configuring-the-maintenance-settings).
-
-  - If a period of longer than twenty years is specified, DataMiner will limit this to twenty years.
-
-  Example:
-
-  ```xml
-  <DataBase active="true" type="Cassandra" local="true">
-    ...
-    <HistorySlider>
-      <TimeToKeep>-1</TimeToKeep>
-    </HistorySlider>
-  </DataBase>
-  ```
-
-  > [!NOTE]
-  > From DataMiner 9.5.5 onwards, this should be configured in [DBMaintenanceDMS.xml](xref:DBMaintenance_xml_and_DBMaintenanceDMS_xml) instead. From DataMiner 9.6.0 \[CU1\]/9.6.6 onwards, it should be configured in System Center. for more information, see [Specifying TTL overrides](xref:Specifying_TTL_overrides).
-
 ### Skipping commit log writing of a Cassandra database
 
 In order to optimize the writing speed to a Cassandra database, an option can be specified that will skip the writing of the commit log.
@@ -195,7 +152,7 @@ To add this option, In *DB.xml*, add a *\<SkipCommitLog>* tag to the currently a
 
 ### Setting the number of retries to connect to the Cassandra database
 
-From DataMiner 9.6.9 onwards, you can specify how many times the *SLDataGateway* process should try to connect to the Cassandra database at startup.
+You can specify how many times the *SLDataGateway* process should try to connect to the Cassandra database at startup.
 
 To do so, specify the number of retries in the *\<ConnectionRetries>* tag. For example:
 
@@ -213,97 +170,42 @@ If Cassandra still cannot be reached after SLDataGateway has tried to connect fo
 
 ### Enabling TLS on the Cassandra database connection
 
-From DataMiner 10.2.0/10.1.3 onwards, it is possible to enable TLS on a Cassandra database connection.
+<!--From DataMiner 10.2.0/10.1.3 onwards, it is possible to enable TLS on a Cassandra database connection.
 
-To do so
+- From DataMiner 10.3.10/10.4.0 onwards(RN 36399 - reverted in RN 37322), you can configure this setting in Cube. See [Cassandra cluster database](xref:Configuring_the_database_settings_in_Cube#cassandra-cluster-database).
 
-1. Enable TLS in the settings of the Cassandra database itself.
+- Prior to DataMiner 10.3.10/10.4.0:-->
 
-2. Enable TLS in the settings of the relevant database in DB.xml. For example:
+To do so:
 
-    ```xml
-    <DataBase active="true" local="true" type="Cassandra">
-     <DBServer>10.10.10.10</DBServer>
-     <UID>myUserId</UID>
-     <PWD>myPassword</PWD>
-     <DB>SLDMADB</DB>
-     <TLSEnabled>true</TLSEnabled>
-    </DataBase>
-    ```
+  1. Enable TLS in the settings of the Cassandra database itself.
 
-> [!NOTE]
-> - This procedure only enables TLS on the database connection. It does not enable client authentication.
-> - From DataMiner 10.1.3 onwards TLS 1.0 is supported. From DataMiner 10.2.4/10.2.0-CU1 onwards, TLS 1.0, 1.1 and 1.2 are supported.
-> - When Cassandra is hosted on the local DataMiner server, and DataMiner Failover is active, Cassandra will use TCP port 7001 for TLS encrypted inter-node communication (instead of port 7000). Make sure this port is allowed through the firewall of both Failover agents.
+  1. Enable TLS in the settings of the relevant database in DB.xml. For example:
+
+     ```xml
+     <DataBase active="true" local="true" type="Cassandra">
+      <DBServer>10.10.10.10</DBServer>
+      <UID>myUserId</UID>
+      <PWD>myPassword</PWD>
+      <DB>SLDMADB</DB>
+      <TLSEnabled>true</TLSEnabled>
+     </DataBase>
+     ```
+
+  > [!NOTE]
+  >
+  > - This procedure only enables TLS on the database connection. It does not enable client authentication.
+  > - From DataMiner 10.1.3 onwards, TLS 1.0 is supported. From DataMiner 10.2.4/10.2.0-CU1 onwards, TLS 1.0, 1.1 and 1.2 are supported.
+  > - When Cassandra is hosted on the local DataMiner server, and DataMiner Failover is active, Cassandra will use TCP port 7001 for TLS encrypted inter-node communication (instead of port 7000). Make sure this port is allowed through the firewall of both Failover agents.
+  > - This setting is also needed to use an [Azure Managed Instance for Apache Cassandra](xref:Azure_Managed_Instance_for_Apache_Cassandra).
 
 ### Configuring the consistency level of Cassandra in a Cassandra Cluster database
 
-If your DMS uses the Cassandra Cluster database type (i.e. one Cassandra cluster for the entire DMS) , you can configure the **consistency level** of the Cassandra database. This is done by means of the **consistencyLevel** attribute. For detailed information, see [Customizing the consistency level of the Cassandra cluster](xref:Migrating_the_general_database_to_a_DMS_Cassandra_cluster#customizing-the-consistency-level-of-the-cassandra-cluster).
-
-> [!TIP]
-> See also: [Data replication and consistency configuration](xref:replication_and_consistency_configuration).
+If your DMS uses the Cassandra Cluster database type (i.e. one Cassandra cluster for the entire DMS) , you can configure the **consistency level** of the Cassandra database. This is done by means of the **consistencyLevel** attribute. For detailed information, see [Consistency level](xref:replication_and_consistency_configuration#consistency-level).
 
 ### Example of a general database configuration
 
-The following example illustrates the configuration of a MySQL general database (prior to DataMiner 9.5.6).
-
-```xml
-<DataBases xmlns="http://www.skyline.be/config/db">
-  ...
-  <DataBase active="true" local="true" type="MySQL">
-    <ConnectString></ConnectString>
-    <Server>localhost</Server>
-    <DBServer>localhost</DBServer>
-    <DSN>SkySQL</DSN>
-    <DB>SLDMADB</DB>
-    <UID>root</UID>
-    <PWD></PWD>
-    <Maintenance monthsToKeep="12" limitByMonths="True" limitByNumber="True">
-      <Min>250000</Min>
-      <Max>300000</Max>
-    <Tables>
-      <Name field="id">Alarm</Name>
-      <Name field="id">Info</Name>
-    </Tables>
-    <SkipTableUpdates></SkipTableUpdates>
-    </Maintenance>
-  </DataBase>
-  ...
-</DataBases>
-```
-
-The following example illustrates the configuration of a Cassandra database (prior to DataMiner 9.5.5):
-
-```xml
-<DataBases xmlns="http://www.skyline.be/config/db">
-  ...
-  <DataBase active="true" type="Cassandra" local="true">
-    <DBServer>localhost</DBServer>
-    <UID>root</UID>
-    <PWD>...</PWD>
-    <Port>9042</Port>
-    <DB>SLDMADB</DB>
-    <PhaseOutOptions>
-      <PhaseOutOption type="AvgTrendData">False</PhaseOutOption>
-    </PhaseOutOptions>
-    <Maintenance monthsToKeep="12" limitByMonths="True" limitByNumber="False">
-      <Min></Min>
-      <Max></Max>
-      <Tables>
-        <Name field="id">Alarm</Name>
-        <Name field="id">Info</Name>
-      </Tables>
-      <SkipTableUpdates></SkipTableUpdates>
-    </Maintenance>
-    <HistorySlider>
-        <TimeToKeep>-1</TimeToKeep>
-    </HistorySlider>
-  </DataBase>
-  ...
-</DataBases>
-```
-
-The following example illustrates the configuration of a general database of type Cassandra cluster (i.e. one Cassandra cluster for the entire DMS, also known as the “Cassandra cluster” feature, available from DataMiner 10.1.0/10.1.2 onwards). As this also requires an Elasticsearch database (see [Indexing database settings](#indexing-database-settings)), the configuration for this database is included in the example:
+The following example illustrates the configuration of a general database of type Cassandra cluster (i.e. one Cassandra cluster for the entire DMS, also known as the “Cassandra cluster” feature, available from DataMiner 10.1.0/10.1.2 onwards). As this also requires an OpenSearch or Elasticsearch database (see [Indexing database settings](#indexing-database-settings)), the configuration for this database is included in the example:
 
 ```xml
 <DataBases xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://www.skyline.be/config/db">
@@ -320,6 +222,35 @@ The following example illustrates the configuration of a general database of typ
  </DataBase>
 </DataBases>
 ```
+
+## Configuring a size limit for file offloads
+
+> [!NOTE]
+> Prior to DataMiner 10.4.0/10.4.2<!-- RN 37446 -->, this functionality is configured in [DBConfiguration.xml](xref:DBConfiguration_xml) instead.
+
+When the main database is offline, file offloads are used to store write/delete operations. You can configure a limit for the file size of these offloads in *DB.xml*. When the limit is reached, new data will be dropped.
+
+To configure this size limit:
+
+1. Open the file *DB.xml* in the folder *C:\\Skyline DataMiner\\*.
+
+1. Configure the file with a *FileOffloadConfiguration* element with the desired maximum size (in MB), as illustrated below:
+
+    ```xml
+    <DataBases>
+      ...
+      <FileOffloadConfiguration>
+        <MaxSizeMB>20</MaxSizeMB>
+      </FileOffloadConfiguration>
+    </DataBases>
+    ```
+
+1. Restart DataMiner.
+
+> [!NOTE]
+>
+> - If no limit is set in *DB.xml* or if the file offload configuration is invalid, the size of the database offload files will by default be limited to 10 GB.
+> - When the specified limit has been reached, the following alarm will be generated: "Max file offload disk usage for certain storages has been reached, new data for these storages will be dropped."
 
 ## Offload database settings
 
@@ -409,6 +340,7 @@ In the following example, “1;TRUE” means that the real-time trend data recor
 ```
 
 > [!NOTE]
+>
 > - If you specify an offload rate, then the real-time trend data records with a negative iStatus value other than -9, -10, -15 and -16 will not be offloaded. Also, since the periodic offloads are not triggered by a user, the *chOwner* field of the offloaded records will be empty.
 > - If you specify an offload interval larger than 24 hours, DataMiner will set the offload interval to the maximum value, i.e. 24 hours.
 
@@ -437,7 +369,7 @@ If the offload database is situated in another domain, you can override the mach
 
 1. Go to the \<DataBase> section containing the configuration of the offload database.
 
-2. Specify the IP address of the DMA in the *dmaIp* attribute of the *RemoteFileShare* tag.
+1. Specify the IP address of the DMA in the *dmaIp* attribute of the *RemoteFileShare* tag.
 
 Example:
 
@@ -469,9 +401,9 @@ To do so:
 
 1. Stop the DMA.
 
-2. Open the file *DB.xml* (in the folder *C:\\Skyline DataMiner\\*).
+1. Open the file *DB.xml* (in the folder *C:\\Skyline DataMiner\\*).
 
-3. In the offload database's *\<offload>* tag containing *local="dataavg"*, add the option *oldstyle="true"*.
+1. In the offload database's *\<offload>* tag containing *local="dataavg"*, add the option *oldstyle="true"*.
 
     Example:
 
@@ -485,7 +417,7 @@ To do so:
     </DataBase>
     ```
 
-4. Save and close *DB.xml*, and restart the DMA.
+1. Save and close *DB.xml*, and restart the DMA.
 
 ### Offloading files to a file cache
 
@@ -495,11 +427,11 @@ To configure this:
 
 1. Stop the DMA.
 
-2. Open the file *DB.xml* (in the folder *C:\\Skyline DataMiner\\*).
+1. Open the file *DB.xml* (in the folder *C:\\Skyline DataMiner\\*).
 
-3. If it is not yet present, add the *\<FileCache>* tag under the *\<Database>* tag for the offload database.
+1. If it is not yet present, add the *\<FileCache>* tag under the *\<Database>* tag for the offload database.
 
-4. Set the *enabled* attribute of the tag to *true* and specify the maximum size of the cache in the *\<MaxSizeKB>* subtag (default = 10 GB).
+1. Set the *enabled* attribute of the tag to *true* and specify the maximum size of the cache in the *\<MaxSizeKB>* subtag (default = 10 GB).
 
     For example:
 
@@ -511,7 +443,7 @@ To configure this:
     </DataBase>
     ```
 
-5. Save and close *DB.xml*, and restart the DMA.
+1. Save and close *DB.xml*, and restart the DMA.
 
 > [!NOTE]
 > In DataMiner 10.0.11, this can only be configured in *DB.xml*. However, from DataMiner 10.2.0/10.1.1 onwards, you can configure this directly in DataMiner Cube. See [Offload database](xref:Offload_database).
@@ -568,25 +500,29 @@ To configure this:
 
 ## Indexing database settings
 
-From DataMiner 9.6.4 onwards, Elasticsearch can be installed on DMAs with a Cassandra database as an additional indexing database. In that case, an additional database will be added to *DB.xml*.
+If a Cassandra database is used, an additional indexing database can be installed. In a setup with storage per DMA, only Elasticsearch is supported, but this setup is not recommended. In a clustered storage setup, you can use OpenSearch, Amazon OpenSearch Services, or Elasticsearch. This indexing database will also be added to *DB.xml*.
 
-The *\<Database>* tag for an Elasticsearch database has the following attributes:
+The *\<Database>* tag for an indexing database has the following attributes:
 
 - **active**: If set to true, the database is active.
 
 - **search**: If set to true, indicates that the database is an indexing database.
 
-- **type**: Currently only “Elasticsearch” is supported.
+- **type**: Currently only “Elasticsearch” is supported. This same value is used For OpenSearch and Amazon OpenSearch Service databases.
 
 > [!NOTE]
 >
-> - There can only be one active indexing database on a DMA.
-> - From DataMiner 10.2.0/10.1.1 onwards, Elastic Amazon AWS can be used. In that case, the URL should be specified in the DBServer element. For example: *\<DBServer>mycompany-elastic.amazonaws.com\</DBServer>*.
-> - From DataMiner 10.2.0/10.1.3 onwards, a *DBConfiguration.xml* file can be configured, which overrides the settings in this section of *DB.xml*. See [Configuring multiple Elasticsearch clusters](xref:Configuring_multiple_Elasticsearch_clusters).
+> - There can only be one active indexing database on a DMA. However, that database can consist of multiple nodes. In that case, the IP addresses for these nodes are all added in the DBServer tag, separated by commas. For example: `<DBServer>10.10.10.1,10.10.10.2,10.10.10.3</DBServer>`
+> - From DataMiner 10.2.0/10.1.1 until DataMiner 10.3.0/10.3.3, Elastic Amazon AWS can be used. In that case, the URL should be specified in the DBServer element. For example: *\<DBServer>mycompany-elastic.amazonaws.com\</DBServer>*.
+> - DataMiner 10.3.0 [CU0] up to 10.3.0 [CU8] and from DataMiner 10.3.3 up to 10.3.11, OpenSearch and Amazon OpenSearch Services can be used.
+> - From DataMiner 10.2.0/10.1.3 onwards, a *DBConfiguration.xml* file can be configured, which overrides the settings in this section of *DB.xml*. See [Configuring multiple OpenSearch clusters](xref:Configuring_multiple_OpenSearch_clusters) or [Configuring multiple Elasticsearch clusters](xref:Configuring_multiple_Elasticsearch_clusters).
 
-### Defining a custom port for an Elasticsearch database
+> [!TIP]
+> See also: [Manually connecting a DMA to an indexing database](xref:Manually_Connecting_DMA_to_Elasticsearch_Cluster)
 
-From DataMiner 10.0.7 onwards, you can define a custom port for an Elasticsearch database. By default, port 9200 is used.
+### Defining a custom port for an indexing database
+
+From DataMiner 10.0.7 onwards, you can define a custom port for an indexing database. By default, port 9200 is used.
 
 To define a different port:
 
@@ -594,7 +530,7 @@ To define a different port:
 
 1. Open the file *DB.xml* (in the folder *C:\\Skyline DataMiner\\*).
 
-1. In the \<DBServer> element for the Indexing database, add a colon after the hostname or IP and specify the port.
+1. In the \<DBServer> element for the indexing database, add a colon after the hostname or IP and specify the port.
 
     For example:
 
@@ -603,13 +539,13 @@ To define a different port:
     ```
 
     > [!NOTE]
-    > The port specified in *DB.xml* must always be the same as the port defined in the Elasticsearch configuration. By default, this configuration is located in the folder *C:\\Program Files\\Elasticsearch\\config\\elasticsearch.yml*.
+    > The port specified in *DB.xml* must always be the same as the port defined in the configuration of the indexing database. For Elasticsearch, this configuration is by default located in the folder *C:\\Program Files\\Elasticsearch\\config\\elasticsearch.yml*.
 
 1. Save the file and restart the DMA.
 
-### Specifying a custom prefix for the Elasticsearch indexes
+### Specifying a custom prefix for the indexes
 
-To support the possibility to have two independent DataMiner Systems using the same Elasticsearch cluster, from DataMiner 10.0.11 onwards, you can specify a custom prefix for the Elasticsearch indices, instead of the default "dms" prefix.
+To support the possibility to have two independent DataMiner Systems using the same indexing database cluster, from DataMiner 10.0.11 onwards, you can specify a custom prefix for the indices, instead of the default "dms" prefix.
 
 To do so:
 
@@ -621,9 +557,9 @@ To do so:
 
 1. Save the file and restart the DMA.
 
-### Specifying custom credentials for Elasticsearch
+### Specifying custom credentials for OpenSearch or Elasticsearch
 
-From DataMiner 10.0.11 onwards, it is possible to configure a custom username and password for Elasticsearch in *DB.xml*.
+From DataMiner 10.0.11 onwards, it is possible to configure a custom username and password for OpenSearch or Elasticsearch in *DB.xml*.
 
 To do so:
 
@@ -631,14 +567,14 @@ To do so:
 
 1. Open the file *DB.xml* (in the folder *C:\\Skyline DataMiner\\*).
 
-1. In the *UID* and *PWD* elements below the Elasticsearch *Database* tag, specify the username and password, respectively.
+1. In the *UID* and *PWD* elements below the Elasticsearch *Database* tag (which is also used for OpenSearch), specify the username and password, respectively.
 
     For example:
 
     ```xml
     <DataBase active="true" search="true" type="Elasticsearch">
      <DBServer>10.11.51.58</DBServer>
-     <UID>elastic</UID>
+     <UID>username</UID>
      <PWD>password123</PWD>
     </DataBase>
     ```
@@ -647,6 +583,13 @@ To do so:
 
 > [!NOTE]
 > For more information on how to configure TLS and security in Elasticsearch, see [Securing the Elasticsearch database](xref:Security_Elasticsearch).
+
+### Configuring multiple OpenSearch or Elasticsearch clusters
+
+> [!NOTE]
+> Prior to DataMiner 10.4.0/10.4.2<!-- RN 37446 -->, this functionality is configured in [DBConfiguration.xml](xref:DBConfiguration_xml) instead.
+
+It is possible to have data offloaded to multiple OpenSearch or Elasticsearch clusters, i.e. one main cluster and several replicated clusters. From DataMiner 10.4.0/10.4.2 onwards, this is configured in *DB.xml*. For detailed information, see [Configuring multiple OpenSearch clusters](xref:Configuring_multiple_OpenSearch_clusters) or [Configuring multiple Elasticsearch clusters](xref:Configuring_multiple_Elasticsearch_clusters).
 
 ## CMDB settings
 

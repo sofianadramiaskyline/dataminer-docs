@@ -77,8 +77,8 @@ A GQI query should be specified in JSON format. To get a correctly configured qu
 
    > [!TIP]
    >
-   > - See [Creating and configuring dashboards](xref:Creating_and_configuring_dashboards).
-   > - See [Configuring query (GQI) data feeds](xref:Configuring_GQI_feeds)
+   > - See [Creating and configuring dashboards](xref:Creating_a_completely_new_dashboard).
+   > - See [Creating a GQI query](xref:Creating_GQI_query)
 
 1. Visualize this query on the dashboard.
 

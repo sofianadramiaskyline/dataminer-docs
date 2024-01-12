@@ -8,56 +8,51 @@ In a DOM manager, you can configure the status system for a [DomDefinition](xref
 
 This configuration is done using a [DomBehaviorDefinition](xref:DomBehaviorDefinition) object that the `DomDefinition` is linked to. This object contains properties to store the statuses, initial status, transitions, and links to the [SectionDefinitions](xref:DOM_SectionDefinition).
 
-```mermaid
+<div class="mermaid">
 classDiagram
-direction LR
-class DomBehaviorDefinition {
-   ID : DomBehaviorDefinitionId
-   Name : string
-   ParentId : DomBehaviorDefinitionId
-   InitialStatusId : string
-   Statuses : List~DomStatus~
-   SectionDefinitionLinks : List~DomStatusSectionDefinitionLink~
-   Transitions : List~DomStatusTransition~
-}
-
-class DomStatus {
-   Id : string
-   DisplayName : string
-}
-
-class DomStatusSectionDefinitionLink {
-   Id : DomStatusSectionDefinitionLinkId
-   FieldDescriptorLinks : List~DomStatusFieldDescriptorLink~
-}
-
-class DomStatusTransition {
-   Id : string
-   FromStatusId : string
-   ToStatusId : string
-   FlowLevel : int
-
-}
-
-class DomStatusSectionDefinitionLinkId {
-   StatusId : string
-   SectionDefinitionId : SectionDefinitionID
-}
-
-class DomStatusFieldDescriptorLink {
-   FieldDescriptorId : FieldDescriptorID
-   Visible : bool
-   RequiredForState : bool
-   ReadOnly : bool
-   ClientReadOnly : bool
-}
-
-DomBehaviorDefinition --> DomStatus
-DomBehaviorDefinition --> DomStatusSectionDefinitionLink
-DomBehaviorDefinition --> DomStatusTransition
-DomStatusSectionDefinitionLink --> DomStatusSectionDefinitionLinkId
-DomStatusSectionDefinitionLink --> DomStatusFieldDescriptorLink 
-```
+   direction LR
+   class DomBehaviorDefinition {
+      DomBehaviorDefinitionId ID
+      string Name
+      DomBehaviorDefinitionId ParentId
+      string InitialStatusId
+      List~DomStatus~ Statuses
+      List~DomStatusSectionDefinitionLink~ SectionDefinitionLinks
+      List~DomStatusTransition~ Transitions
+   }
+   class DomStatus {
+      string Id
+      string DisplayName
+   }
+   class DomStatusSectionDefinitionLink {
+      DomStatusSectionDefinitionLinkId Id
+      List~DomStatusFieldDescriptorLink~ FieldDescriptorLinks
+      bool AllowMultipleSections
+      bool IsSoftDeleted
+   }
+   class DomStatusTransition {
+      string Id
+      string FromStatusId
+      string ToStatusId
+      int FlowLevel
+   }
+   class DomStatusSectionDefinitionLinkId {
+      string StatusId
+      SectionDefinitionID SectionDefinitionId
+   }
+   class DomStatusFieldDescriptorLink {
+      FieldDescriptorID FieldDescriptorId
+      bool Visible
+      bool RequiredForState
+      bool ReadOnly
+      bool ClientReadOnly
+   }
+   DomBehaviorDefinition --> DomStatus
+   DomBehaviorDefinition --> DomStatusSectionDefinitionLink
+   DomBehaviorDefinition --> DomStatusTransition
+   DomStatusSectionDefinitionLink --> DomStatusSectionDefinitionLinkId
+   DomStatusSectionDefinitionLink --> DomStatusFieldDescriptorLink
+</div>
 
 Using the status system is an alternative way of defining which data must be present in a `DomInstance`. That means that the `SectionDefinitionLinks` on the `DomDefinition` are not used in that case. Additionally, the following properties on the `FieldDescriptor` will be ignored:
 
@@ -127,7 +122,8 @@ For each status, you can configure the requirements of a specific field. This is
 |--|--|--|
 | Id | DomStatusSectionDefinitionLinkId | Contains the `SectionDefinitionID` and status ID. |
 | FieldDescriptorLinks | `List<DomStatusFieldDescriptorLink>` | Contains the links to `FieldDescriptors` that are part of the `SectionDefinition`. |
-| AllowMultipleValues | bool | Defines whether a `DomInstance` can have multiple `Sections` for this `SectionDefinition` in this specific status. |
+| AllowMultipleSections | bool | Defines whether a `DomInstance` can have multiple `Sections` for this `SectionDefinition` in this specific status. |
+| IsSoftDeleted | bool | Defines whether this `StatusSectionDefinitionLink` is soft-deleted or not. See [soft-deletable objects](xref:DOM_objects#soft-deletable-objects). Available from DataMiner 10.3.9/10.4.0 onwards. |
 
 > [!NOTE]
 >

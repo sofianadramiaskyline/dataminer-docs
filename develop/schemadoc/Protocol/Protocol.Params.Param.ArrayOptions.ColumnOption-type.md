@@ -26,10 +26,10 @@ Used to automatically create a unique value. Only applicable for primary key col
 > The use of this type is deprecated for logger tables for the following reasons:
 >
 > - MySQL supports auto-increment, but Cassandra does not have this functionality by default. DataMiner supports auto-increment on a Cassandra database by walking over the table to determine the maximum ID to determine the next value. However, it is not advised to use this for logger tables as a logger table can be very large.
-> - It is not supported by Elasticsearch.
+> - It is not supported with an indexing database or [Storage as a Service (STaaS)](xref:STaaS).
 > - In case multiple elements could write to the same logger table, it is difficult for DataMiner to determine which element is responsible for doing the housekeeping of maintaining the PK value to be used when inserting a new row.
 >
-> If auto-increment behavior is needed for logger tables, it is better to implement it in the protocol itself. If you still need a unique PK in a logger table, the recommendation is to use a GUID (Note: Elasticsearch does not need a PK).
+> If auto-increment behavior is needed for logger tables, it is better to implement it in the protocol itself. If you still need a unique PK in a logger table, the recommendation is to use a GUID (Note: The indexing database does not need a PK).
 
 ### concatenation
 
@@ -90,6 +90,9 @@ This type is used in the following situations:
 ### snmp
 
 Represents an SNMP column
+
+> [!IMPORTANT]
+> From DataMiner 10.3.8, 10.3.0 [CU5], and 10.2.0 [CU17] onwards (RN 36559), in an SNMP table, columns of type "retrieved" can be placed in between columns of type "snmp" (provided the primary key column is a column of type "snmp" and not a column of type "retrieved"). In earlier versions of DataMiner, all columns of type "snmp" have to be placed before any group of type "retrieved".
 
 ### state
 

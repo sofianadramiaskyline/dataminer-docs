@@ -46,7 +46,6 @@ To add C# code to a script:
      >     - using Skyline.DataMiner.Net.Exceptions
      >     - using Skyline.DataMiner.Net.Messages
      >     - using Skyline.DataMiner.Net.AutomationUI
-     > - To reference additional DLLs, e.g. a custom DLL placed in the *C:\\Skyline DataMiner\\ProtocolScripts* folder, you need to specify an absolute path.
 
    - *DLL references*: Allows you to reference DLLs that are required by the Automation script.
 
@@ -62,6 +61,8 @@ To add C# code to a script:
      > - Skyline.DataMiner.Storage.Types.dll
      > - SLLoggerUtil.dll
      > - SLAnalyticsTypes.dll (from DataMiner 10.1.11 onwards)
+     > 
+     > To reference additional DLLs, e.g. a custom DLL placed in the *C:\\Skyline DataMiner\\ProtocolScripts* folder, you need to specify an absolute path.
 
    - *Script references*: Allows you to refer to other C# blocks. See [Compiling a C# code block as a library](xref:Compiling_a_CSharp_code_block_as_a_library).
 
@@ -239,7 +240,7 @@ Restrictions:
 ## Online help and user assistance
 
 > [!TIP]
-> See also: [Rui’s Rapid Recap – C# Automation snippets](https://community.dataminer.services/video/ruis-rapid-recap-c-automation-snippets/) on DataMiner Dojo
+> See also: [The Basics of DataMiner Automation Snippets](https://community.dataminer.services/video/the-basics-of-dataminer-automation-snippets/) on DataMiner Dojo ![Video](~/user-guide/images/video_Duo.png)
 
 ### Sample snippets in shortcut menu
 

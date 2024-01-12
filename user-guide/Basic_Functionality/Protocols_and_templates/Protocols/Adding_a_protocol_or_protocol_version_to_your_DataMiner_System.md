@@ -1,5 +1,6 @@
 ---
 uid: Adding_a_protocol_or_protocol_version_to_your_DataMiner_System
+keywords: adding a driver, adding a connector
 ---
 
 # Adding a protocol or protocol version to your DataMiner System
@@ -20,7 +21,7 @@ You can upload:
 
 ## Deploying a protocol from the catalog
 
-See [Deploying a DataMiner connector to your system](xref:Deploying_A_DataMiner_Connector_to_your_system).
+See [Deploying a Catalog item](xref:Deploying_a_catalog_item).
 
 ## Adding a protocol or protocol version in DataMiner Cube
 
@@ -47,7 +48,7 @@ In DataMiner Cube, you can upload either *Protocol.xml* files or entire protocol
 ### Updating protocols with the Update Center
 
 > [!TIP]
-> See also: [Rui’s Rapid Recap – Protocol Update Center](https://community.dataminer.services/video/ruis-rapid-recap-protocol-update-center/) on DataMiner Dojo
+> See also: [Rui’s Rapid Recap – Protocol Update Center](https://community.dataminer.services/video/ruis-rapid-recap-protocol-update-center/) on DataMiner Dojo ![Video](~/user-guide/images/video_Duo.png)
 
 With the Update Center, you can check if protocol updates are available and, if so, install these.
 

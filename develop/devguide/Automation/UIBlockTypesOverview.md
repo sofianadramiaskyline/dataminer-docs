@@ -16,6 +16,7 @@ The [UIBlockType](xref:Skyline.DataMiner.Automation.UIBlockType) enum defines di
 | [Calendar](#calendar) | Calendar control. |
 | [CheckBox](#checkbox) | Checkbox. |
 | [CheckBoxList](#checkboxlist) | Checkbox list. |
+| [DownloadButton](#downloadbutton) | Download button. |
 | [DropDown](#dropdown) | Dropdown list. |
 | [Executable](#executable) | Executable. |
 | [FileSelector](#fileselector) | File selector. |
@@ -146,6 +147,38 @@ uiBuilder.AppendBlock(checkBoxList);
 > bool ticked = results.GetChecked("list","2");
 > ```
 
+## DownloadButton
+
+Allows you to define a download button. Available from DataMiner 10.3.7/10.4.0 onwards.<!-- RN 35869 -->
+
+Example:
+
+```csharp
+var downloadButtonOptions = new AutomationDownloadButtonOptions()
+{
+   URL = @"/Documents/DMA_COMMON_DOCUMENTS/DailyReport.pdf", // The URL to the file, which can be an absolute URL or a relative URL to the DMA hostname.
+   StartDownloadImmediately = false, // If set to true (the default is false), the download will start immediately when the component is displayed.
+   ReturnWhenDownloadIsStarted = false, // If set to true (the default is false), the engine.ShowUI() method will return as soon as the download is started.
+   FileNameToSave = "Report.PDF", // The file name that will be saved. By default, this is the same as the file name of the document.
+};
+UIBlockDefinition blockItem = new UIBlockDefinition
+{
+   Type = UIBlockType.DownloadButton,
+   Width = 125,
+   Text = "Get report of today",
+   Style = Style.Button.CallToAction,
+   ConfigOptions = downloadButtonOptions,
+};
+uiBuilder.AppendBlock(blockItem);
+```
+
+> [!NOTE]
+>
+> - This download button is currently only supported in Automation scripts used in the DataMiner web apps (e.g. Dashboards or Low-Code Apps).
+> - The URL is used as the content of the `href` property in an A-HTML element (after sanitizing for security). For more information on how to build valid URLs, see <https://www.w3schools.com/html/html_filepaths>. The most common use cases are:
+>   - An absolute URL to a file, for example: `https://dataminer.services/install/DataMinerCube.exe`
+>   - A relative URL, relative to the DMA hostname, for example: `/Documents/General Documents/myfile.txt`
+
 ## DropDown
 
 Allows you to define a selection box.
@@ -236,6 +269,13 @@ All files uploaded by users will by default be placed in the *C:\\Skyline DataMi
 
 > [!TIP]
 > See also: [GetUploadedFilePath](xref:Skyline.DataMiner.Automation.UIResults#Skyline_DataMiner_Automation_UIResults_GetUploadedFilePath_System_String_)
+
+> [!NOTE]
+> Unlike other UI block types, *FileSelector* does not allow setting an [InitialValue](xref:Skyline.DataMiner.Automation.UIBlockDefinition#Skyline_DataMiner_Automation_UIBlockDefinition_InitialValue). However, from DataMiner 10.3.12/10.4.0 onwards<!-- RN 37260 -->, during an interactive Automation script session, it is possible to keep the files that were already uploaded after the UI was shown.
+>
+> When an interactive Automation script is executed **in a web app**, the UI block needs to keep the same [Row](xref:Skyline.DataMiner.Automation.UIBlockDefinition#Skyline_DataMiner_Automation_UIBlockDefinition_Row), [Column](xref:Skyline.DataMiner.Automation.UIBlockDefinition#Skyline_DataMiner_Automation_UIBlockDefinition_Column), and [DestVar](xref:Skyline.DataMiner.Automation.UIBlockDefinition#Skyline_DataMiner_Automation_UIBlockDefinition_DestVar) within the session. If a block of a different type or [DestVar](xref:Skyline.DataMiner.Automation.UIBlockDefinition#Skyline_DataMiner_Automation_UIBlockDefinition_DestVar) is at same location or that location has no blocks when the UI is shown again, the information about the uploaded files is lost.
+>
+> When an interactive Automation script is executed **in Cube**, the UI block needs to keep the same [DestVar](xref:Skyline.DataMiner.Automation.UIBlockDefinition#Skyline_DataMiner_Automation_UIBlockDefinition_DestVar) within the session. If there is no file selector block with the same [DestVar](xref:Skyline.DataMiner.Automation.UIBlockDefinition#Skyline_DataMiner_Automation_UIBlockDefinition_DestVar) when the UI is shown again, the information about the uploaded files is lost.
 
 ## Numeric
 
@@ -459,6 +499,7 @@ uiBuilder.AppendBlock(blockItem);
 > - The `AutomationTimeUpDownOptions` property `AllowSpin` is not supported in the Low-Code Apps.
 > - The `AutomationTimeUpDownOptions` property `UpdateValueOnEnter` is not supported in Cube.
 > - The `AutomationTimeUpDownOptions` property `FractionalSecondsDigitsCount` is only supported in Cube and should be within a range of 0 to 3.
+> - From DataMiner 10.3.0 [CU1]/10.3.4 onwards, the `ShowTimeUnits` property is available. When this property is set to *true*, the component will display labels indicating the days, hours, minutes and seconds. By default, this property is set to *false*. The `ShowTimeUnits` property is only supported in the DataMiner web apps and not in DataMiner Cube. <!-- RN 35435 -->
 > - When the initial value is set to an empty string or null, a default value of one hour will be displayed in Cube. In the Low-Code Apps, zero (00:00:00) will be displayed.
 > - The time span values are returned in the constant invariant format (e.g. "3.17:25:30.5569124").
 

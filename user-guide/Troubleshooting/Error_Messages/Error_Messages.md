@@ -24,6 +24,8 @@ This section provides more information on the following error messages:
 
 - [ElementID (x) Not unique y existing = z](xref:ElementID_x_not_unique_y_existing_z)
 
+- [Failed to get log file](xref:Failed_to_get_log_file)
+
 - [HTTP error 500](xref:HTTP_error_500)
 
 - [InitializeIElement for Element x failed. y (hr = z)](xref:InitializeIElement_for_Element_x_failed)
@@ -55,7 +57,5 @@ This section provides more information on the following error messages:
 - [The terminal server has exceeded the maximum number of allowed connections](xref:The_terminal_server_has_exceeded_the_maximum_number_of_allowed_connections)
 
 - [Thread problem in x: y](xref:Thread_problem_in_x)
-
-- [Trust not granted](xref:Trust_not_granted)
 
 - [Unknown Error](xref:Unknown_Error)

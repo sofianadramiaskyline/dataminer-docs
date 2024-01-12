@@ -15,7 +15,7 @@ The metrics provided below are provided as a guide to help dimension DataMiner p
 > - Take care when combining metrics. For example, it is impossible to run 1000 regular elements next to 100,000 EPM (formerly CPE) devices on a single DMA.
 > - The metrics are specified by DMA and DMS. DMA being a single DataMiner node and DMS referring to the whole clustered system.
 
-All specifications are provided based on the assumption that DMAs are running on servers that comply with the [DataMiner compute requirements](https://community.dataminer.services/dataminer-compute-requirements/).
+All specifications are provided based on the assumption that DMAs are running on servers that comply with the [DataMiner compute requirements](xref:DataMiner_Compute_Requirements).
 
 ## Limits
 
@@ -23,7 +23,7 @@ All specifications are provided based on the assumption that DMAs are running on
 | -- | ------------- | ----- | ------- | ------- |
 | 1 | Number of elements | DMA | 5 - 1,000 | Depending on the license<br>(highest license is 1,000) |
 | 2 | Number of elements | DMS | 25,000 ||
-| 3 | Number of standard services | DMS | 10,000 ||         
+| 3 | Number of standard services | DMA/DMS | 10,000 ||
 | 4 | Number of enhanced services | DMA | 5 - 1,000 ||
 | 5 | Number of enhanced services | DMS | 10,000 ||
 | 6 | Number of SLAs | DMA | 5 - 1,000 ||
@@ -49,7 +49,8 @@ All specifications are provided based on the assumption that DMAs are running on
 - [Automatic incident tracking benchmarks](xref:automatic_incident_tracking_benchmarks)
 - [Automation benchmarks](xref:automation_benchmarks)
 - [Behavioral anomaly detection benchmarks](xref:behavioral_anomaly_detection_benchmarks)
-- [Cassandra write performance benchmarks](xref:cassandra_write_performance_benchmarks)
+- [Cassandra (single node) write performance benchmarks](xref:cassandra_write_performance_benchmarks)
+- [Cassandra (cluster) write performance benchmarks](xref:cassandra_cluster_write_performance_benchmarks)
 - [Change history metrics](xref:change_history_benchmarks)
 - [Dashboards benchmarks](xref:dashboards_benchmarks)
 - [DataMiner Object Model benchmarks](xref:dataminer_object_model_benchmarks)
@@ -68,5 +69,6 @@ All specifications are provided based on the assumption that DMAs are running on
 - [Service benchmarks](xref:service_benchmarks)
 - [Service profile benchmarks](xref:service_profile_benchmarks)
 - [Service & Resource Management benchmarks](xref:service_resource_management_benchmarks)
+- [User-Defined APIs benchmarks](xref:user-defined_API_benchmarks)
 - [View benchmarks](xref:view_benchmarks)
 - [Visual Overview benchmarks](xref:visual_overview_benchmarks)

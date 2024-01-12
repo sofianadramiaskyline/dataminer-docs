@@ -10,7 +10,7 @@ The procedure below details how you can restore a broken table structure in a My
 
 - Access to the servers with administrator rights. This requires a connection dedicated completely or partially to this procedure, via VPN or local network.
 - In case of data modelling needs, access to a spreadsheet application.
-- Access to MySQL Workbench.
+- Access to [MySQL Workbench](xref:MySQL_Workbench).
 - Knowledge of the exact problem with the MySQL database. This must be identified before you start this procedure.
 
 ## Procedure
@@ -26,7 +26,7 @@ The procedure below details how you can restore a broken table structure in a My
 #### Steps
 
 1. Connect to the system using the designated VPN or host PC.
-1. Make sure you have access to MySQL Workbench.
+1. Make sure you have access to [MySQL Workbench](xref:MySQL_Workbench).
 1. Determine which of the 3 alternatives below is appropriate to restore the database:
 
    - Restoring a corrupt table structure.
@@ -46,14 +46,14 @@ Use the steps below to restore tables in a MySQL DataMiner database after a data
 
 1. Check the log information.
 
-   - You can find the MySQL error log in a file with the name of the DMA and the extension *.err* in the MySQL installation folder, e.g. `C:\ProgramData\MySQL\MySQL Server 5.5`.
+   - You can find the MySQL error log in a file with the name of the DMA and the extension *.err* in the MySQL ProgramData folder, e.g. `C:\ProgramData\MySQL\MySQL Server 5.5`.
    - DataMiner logging can be found in the *SLDatagateway*, *SLDBconnection* and *SLDatabase* log files in the folder `C:\Skyline DataMiner\Logging`.
 
 1. Open MySQL Workbench to verify the integrity of the SLDMADB tables. If you need to provide credentials, use `-user root -password (empty)`.
 1. Check if the MySQL service is running. If it is not, enforce forced recovery mode by configuring the MySQL configuration file as follows:
 
    1. Make sure you have a backup copy of your database in case it needs to be recreated.
-   1. Go to the MySQL installation folder, e.g. C:\ProgramData\MySQL\MySQL Server 5.5.
+   1. Go to the MySQL installation folder, e.g. C:\Program Files\MySQL\MySQL Server 5.5.
    1. Open the file my.ini, using an application like Notepad, and add the following recovery options:
 
       ```txt
@@ -79,7 +79,7 @@ Use the steps below to restore tables in a MySQL DataMiner database after a data
        `Id` smallint(6) NOT NULL,
        `Value` varchar(200) NOT NULL,
        PRIMARY KEY (`Id`)
-     ) ENGINE=InnoDB DEFAULT CHARSET=latin1$$
+     ) ENGINE=InnoDB DEFAULT CHARSET=latin1
      ```
 
      Consult the structure of the table in the workbench to structure your query correctly.

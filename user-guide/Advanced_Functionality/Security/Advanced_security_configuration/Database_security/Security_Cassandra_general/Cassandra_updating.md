@@ -4,7 +4,7 @@ uid: Cassandra_updating
 
 # Updating Cassandra
 
-It's common practice with Cassandra to do rolling upgrades. If your settings allows it, an upgrade can be done without downtime.
+It is common practice with Cassandra to do rolling upgrades. If your settings allows it, an upgrade can be done without downtime.
 
 Doing a rolling upgrade basically means:
 
@@ -15,7 +15,13 @@ Doing a rolling upgrade basically means:
 > [!IMPORTANT]
 > When going from one major range to another (e.g. from 3.x to 4.x), it is best practice to first upgrade to the latest version in the current range before going to the new range.
 
+> [!TIP]
+> If you do not want the hassle of maintaining the DataMiner storage databases yourself, we recommend using [DataMiner Storage as a Service](xref:STaaS) instead.
+
 ## Checking the Cassandra version
+
+> [!TIP]
+> To limit the impact of a breach through Cassandra, we recommended running the Cassandra service as a non-SYSTEM user. For more details, see [Running Cassandra as non-SYSTEM user](xref:Running_Cassandra_as_non-SYSTEM_user).
 
 We recommend that you periodically update your Cassandra database. This will ensure that all known vulnerabilities are fixed.
 
@@ -28,17 +34,17 @@ With recent DataMiner versions, in case a Cassandra database per Agent is used, 
 > [!NOTE]
 > Cassandra 4.0 **no longer supports Windows**. This means that extra Linux servers will be required to host the Cassandra database.
 
-> [!TIP]
-> To limit the impact of a breach through Cassandra, we recommended running the Cassandra service as a non-SYSTEM user. For more details, see [Running Cassandra as non-SYSTEM user](xref:Running_Cassandra_as_non-SYSTEM_user).
-
 ## Updating the Cassandra version
 
 As with all software, it is good practice to ensure you are running the latest version to minimize the number of known vulnerabilities.
 
-> [!TIP]
+> [!NOTE]
 > A PowerShell script is available to update Cassandra easily. For more details see [Cassandra Hardening](https://github.com/SkylineCommunications/cassandra-hardening).
 
 To update the Cassandra version:
+
+> [!TIP]
+> To limit the impact of a breach through Cassandra, we recommended running the Cassandra service as a non-SYSTEM user. For more details, see [Running Cassandra as non-SYSTEM user](xref:Running_Cassandra_as_non-SYSTEM_user).
 
 ### [On Windows](#tab/tabid-1)
 
@@ -76,7 +82,7 @@ To update the Cassandra version:
 
    `[System.Environment]::SetEnvironmentVariable('JAVA_HOME','C:\progra~1\Cassandra\Java\',[System.EnvironmentVariableTarget]::Machine)`
 
-1. Open a PowerShell prompt (as Administrator) and execute the following command to register the Cassandra service:
+1. Open a **new PowerShell prompt** (as Administrator) and execute the following command to register the Cassandra service:
 
    `cd 'C:\Program Files\Cassandra\bin\'; .\cassandra.ps1 -install`
 

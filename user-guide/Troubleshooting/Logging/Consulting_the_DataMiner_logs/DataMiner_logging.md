@@ -22,7 +22,7 @@ This page consists of three sections:
 
 ## Changing log levels
 
-### From DataMiner 10.0.4 onwards
+### [From DataMiner 10.0.4 onwards](#tab/tabid-1)
 
 From DataMiner 10.0.4 onwards, the log levels for each module are indicated to the right of the module name in the log file list. Example: 0 0 0, 1 0 0, 1 3 2, etc. At the top of the list, the default settings are displayed.
 
@@ -51,9 +51,11 @@ To change the log levels for a specific module:
 1. Click *Apply levels* to apply your changes.
 
 > [!NOTE]
-> Logging requires resources from your DataMiner Agent (CPU and HD usage), so be careful with the higher log levels like *Log everything (5)* and *Development logging (6)*.
+>
+> - Logging requires resources from your DataMiner Agent (CPU and HD usage), so be careful with the higher log levels like *Log everything (5)* and *Development logging (6)*.
+> - Not all log files are available in DataMiner Cube. If you want to change the log levels for a log file that is not available in Cube, you can [do so using the SLNetClientTest tool](xref:SLNetClientTest_changing_log_levels).
 
-### Prior to DataMiner 10.0.4
+### [Prior to DataMiner 10.0.4](#tab/tabid-2)
 
 The log levels of a DMA are indicated in the group header of that DMA. Example: 0 0 0, 1 0 0, 1 3 2, etc.
 
@@ -72,6 +74,8 @@ In the *Log settings* section, you can change the log levels for all modules of 
 
 > [!NOTE]
 > Logging requires resources from your DataMiner Agent (CPU and HD usage), so be careful with the higher log levels like *Log everything (5)* and *Development logging (6)*.
+
+***
 
 ## Sorting the log file list
 
@@ -99,6 +103,7 @@ Some items in the list are of particular note:
 | Cassandra Migration | Log file of the migration of the general database to Cassandra. Contains among others the settings used for the migration. See [Migrating the general database to Cassandra](xref:Migrating_the_general_database_to_Cassandra). |
 | Connectivity | Log file regarding the DataMiner Connectivity Framework. |
 | Correlation | Log file of the next-generation Correlation engine of the DMA. To facilitate troubleshooting, it is possible to activate verbose Correlation logging with the SLNetClientTest tool. However, note that this is an advanced system administration tool that should be used with extreme caution. See [Activating verbose Correlation logging](xref:SLNetClientTest_activating_verbose_correlation_logging). |
+| Database Connection | Log file related to the connection to the various databases (e.g. general database, offload database, indexing database, etc.) |
 | Database DataMiner | Log file with the traffic between the database and the SLDataMiner process of the DMA. |
 | Database SLNet | Log file with the traffic between the database and the SLNet process of the DMA. Contains among others the username of a user that initiated a manual DMA Failover. |
 | DMS | Log file with the traffic between the DMA and its peers in the DMS. Contains among others the file synchronization process. |
@@ -113,8 +118,10 @@ Some items in the list are of particular note:
 | SNMP Agents | Log file of the DMA’s SNMP agent software. |
 | SNMP Managers | Log file of the DMA’s SNMP manager software. Mentions among others the SNMP notifications the DMA has been receiving. |
 | Spectrum | Log file of the Spectrum Analyzer module of the DMA. If the logging level for this file is set to *Log everything*, it also includes logging for spectrum script execution and measurement point selection. |
-| SSH | Dedicated log file for SSH connections. <br> Note the following regarding SSH logging:<br> -  You can fully disable SSH logging by creating a file called “*SLSshDisableLog.txt*” in the folder *C:\\Skyline Dataminer\\Logging\\*. This can be useful to improve performance in some cases. <br> -  Alternatively, you can enable extended logging by creating a file called “*SLSSHExt.txt*” in the folder *C:\\Skyline Dataminer\\Logging\\*. This will activate extended logging regarding the beginning and end of reads/writes and regarding what data is written/read. However, extended logging uses a lot of memory, so do not leave this enabled while this is not needed. |
+| SSH | Dedicated log file for SSH connections. <br> Note the following regarding SSH logging:<br> - You can fully disable SSH logging by creating a file called “*SLSshDisableLog.txt*” in the folder *C:\\Skyline Dataminer\\Logging\\*. This can be useful to improve performance in some cases. <br> - Alternatively, you can enable extended logging by creating a file called “*SLSSHExt.txt*” in the folder *C:\\Skyline Dataminer\\Logging\\*. This will activate extended logging regarding the beginning and end of reads/writes and regarding what data is written/read. However, extended logging uses a lot of memory, so do not leave this enabled while this is not needed. |
 | Watchdog | Log file with the details of runtime errors detected by the SLWatchdog process. For more information, see [Watchdog logging](xref:Watchdog_logging) |
 
 > [!NOTE]
-> Some of the mentioned log files refer to advanced DataMiner modules that are not part of the DataMiner system by default.
+>
+> - For each of these log files, a corresponding TXT file is located in the `C:\Skyline DataMiner\Logging\` folder. The name of the TXT file is often the same as the name mentioned in Cube, but with an "SL" prefix. However, this is not always the case. If you select a log file in Cube, the corresponding TXT file name will be displayed at the top.
+> - Some of the mentioned log files refer to advanced DataMiner modules that are not part of the DataMiner system by default.

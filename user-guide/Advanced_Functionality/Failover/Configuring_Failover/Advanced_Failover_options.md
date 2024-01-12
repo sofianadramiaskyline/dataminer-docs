@@ -18,7 +18,9 @@ Go to this tab to specify whether Failover should occur manually or automaticall
 - If you choose *Manual*, switching can be done with the *Switch* button at the bottom of the *Failover* dialog box.
 
   > [!NOTE]
-  > Manual switching is not possible when the backup DMA is not running. In that case the *Switch* button will be unavailable.
+  >
+  > - Manual switching is not possible when the offline DMA is not running. In that case, the *Switch* button will be unavailable.
+  > - If the online DMA becomes unavailable for some reason, you can switch by connecting to the offline DMA with DataMiner Cube. You will then get the option to bring that DMA online.
 
 ## Synchronization
 
@@ -27,7 +29,7 @@ Go to this tab to configure the network interface for data synchronization from 
 > [!NOTE]
 >
 > - If there is a third network interface that connects both DMAs using a cross cable, it is advisable to select that one in order to prevent synchronization failures.
-> - Note that synchronization of a Cassandra or Elasticsearch database is taken care of by the database itself, outside of DataMiner.
+> - Note that synchronization of a Cassandra or OpenSearch/Elasticsearch database is taken care of by the database itself, outside of DataMiner.
 
 ## Heartbeats
 

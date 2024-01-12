@@ -114,6 +114,12 @@ Up to now, when you right-clicked the *DataMiner Taskbar Utility* system tray ic
 
 Also, after DataMiner had been stopped, up to now, the *SLXml*, *SLLog* and *SLDataGateway* processes would incorrectly start up again.
 
+#### Problem with SLElement when an alarm template was assigned to an element or unassigned from an element while an alarm was being updated [ID_34813]
+
+<!-- MR 10.2.0 [CU12] - FR 10.3.1 -->
+
+When an alarm template was assigned to an element or unassigned from an element while an alarm was being updated, in some cases, an error could occur in SLElement.
+
 #### Problem with SLElement when a trend template was being assigned [ID_34824]
 
 <!-- MR 10.2.0 [CU12] - FR 10.3.1 -->
@@ -240,7 +246,7 @@ In a Cassandra database, the "time to live" (TTL) setting of spectrum trace data
 
 When a tree control contained EPM objects, in some cases, the alarm bubble-up feature would not work correctly.
 
-#### Dashboards app & Low-code apps - Line & area chart component: Problems when visualizing resource availability [ID_35408]
+#### Dashboards app & Low-Code Apps - Line & area chart component: Problems when visualizing resource availability [ID_35408]
 
 <!-- MR 10.2.0 [CU12] - FR 10.3.3 -->
 
@@ -274,7 +280,7 @@ SLDataGateway would not correctly return errors when querying SLA logger tables 
 
 When northbound SNMP inform messages were being sent in chronological order, an error could occur when sending those messages suddenly stopped.
 
-#### Low-code apps: Problem when creating a new draft version [ID_35446]
+#### Low-Code Apps: Problem when creating a new draft version [ID_35446]
 
 <!-- MR 10.2.0 [CU12] - FR 10.3.3 -->
 
@@ -337,3 +343,9 @@ When you updated an re-applied a service template while a card of a service crea
 <!-- MR 10.2.0 [CU12] - FR 10.3.3 -->
 
 When you enabled the *Automatic incident tracking* option of an active alarms tab while a quick filter was applied, in some cases, the alarm counters in the footer bar would incorrectly start to show negative values.
+
+#### Problem with SLPort when an element with a serial connection was restarted [ID_35773]
+
+<!-- MR 10.2.0 [CU12]/10.3.0 [CU0] - FR 10.3.3 [CU1] -->
+
+In some cases, an error could occur in SLPort when an element with a serial connection was restarted.

@@ -32,18 +32,21 @@ The Subscription Plan offering results in a well-defined and controlled expendit
 
 DataMiner Pay-per-Use is the most flexible model, very similar to the Subscription Service, but with no fixed Monthly Utilization Allowance nor annual contract or commitments. DataMiner usage is simply metered on a monthly basis and deducted from the prepaid credit allowance.
 
-## Free DataMiner System
+### DataMiner Express
 
-Every organization can get started with one free standalone DataMiner System, a functionally full-featured DataMiner platform, only limited by the credit allowance per service.
+With DataMiner Express, you can deploy a standalone, fully featured DataMiner System per [organization](xref:Pricing_Usage_based_service#organization). It can be deployed on private infrastructure or as a service.
 
-This is the perfect way to get started, allowing anyone to use the platform and build up knowledge on the many possibilities it has to offer, within this free allowance.
+This is the perfect way to get started, allowing anyone to use the platform and build up knowledge on the many possibilities it has to offer. When ready to scale up, you can set up a yearly subscription or start with a number of credits in the Pay-per-Use model.
 
-When ready to scale up, the user can set up a yearly subscription or start with a number of credits in the Pay-per-Use model.
+- **Private instance**: Express systems deployed on your own infrastructure (on-premises or in a private cloud) are free, but must be renewed every 12 months.
 
-> [!NOTE]
+- **DataMiner as a Service**: Express systems [deployed as a service](xref:Creating_a_DMS_in_the_cloud) are free for the first 7 days, with a subscription after that.
+
+> [!TIP]
+> See also:
 >
-> - Self-hosted/on-premises free DataMiner Systems are not time-limited. An organization can use the system as long as it remains reachable (connected to dataminer.services).
-> - Skyline-hosted free DataMiner Systems (DataMiner as a Service) are only available for a maximum period of 30 days. Contact your Account Manager for details.
+> - [Usage-based services](xref:Pricing_Usage_based_service)
+> - [DataMiner usage-based pricing](https://community.dataminer.services/usage-based-pricing/) on DataMiner Dojo
 
 ## DataMiner Perpetual-Use Licenses vs Usage-based services
 
@@ -64,11 +67,8 @@ Usage-based services are charged based on the actual monthly usage of services, 
 | Support services | Optional annual recurring fee, relative to the value of the deployed Perpetual-Use Licenses. | Included (see [DataMiner Support Plans](https://community.dataminer.services/support-services/)). |
 | DataMiner Probes | Server-based licenses, each with fixed capacity tiers of managed objects.  | N/A |
 
-
 > [!NOTE]
 > DataMiner Probes (DMP) are not clustered with a DataMiner System, which means perpetual-licensed DMPs can be used to bring data from remote locations to a DataMiner System running as a usage-based service.
-
-
 
 ## Subscription Plan vs Pay-per-Use Plan
 
@@ -88,7 +88,6 @@ In case of a Pay-per-Use plan, user pay for what they use, giving ultimate flexi
 | Over-utilization | Charged at a premium fee | N/A |
 | New connector development | MUA < 200: charged as professional services credits <br> MUA >= 200: included with no additional costs, subject to a fair use policy  |  N/A |
 | Support services | MUA < 200: Community Plan <br> MUA >= 200: Continuity/Evolve | Community Plan|
-| Professional Services credits included |  100 < MUA < 200: 100 <br> 200 < MUA < 400: 200 <br> MUA >= 400: 600 | 50 for every 1000 pay-per-use credits |
 
 > [!IMPORTANT]
-> The system must be connected to dataminer.services in order to enable metering for systems that are hosted by the user (on-premises or private cloud). The system will stop working if disconnected for longer than 24 hours.
+> The system must be connected to dataminer.services in order to enable metering for systems that are privately hosted by the user (on-premises or private cloud). The system will stop working if disconnected for longer than 24 hours.

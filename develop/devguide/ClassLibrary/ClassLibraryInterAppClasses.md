@@ -4,7 +4,7 @@ uid: ClassLibraryInterAppClasses
 
 # InterApp classes
 
-The InterApp classes provide a C# message and response architecture that can be used:
+The InterApp classes, available through the NuGet package [Skyline.DataMiner.Core.InterAppCalls.Common](https://www.nuget.org/packages/Skyline.DataMiner.Core.InterAppCalls.Common), provide a C# message and response architecture that can be used:
 
 - From element to element and back.
 - From Automation script to element and back.
@@ -27,10 +27,6 @@ Its main purpose is for use within large projects where inter-element or inter-a
 ### DataMiner requirements
 
 - The InterApp classes require DataMiner 9.6.3 or higher to function correctly.
-
-### DIS requirements
-
-- Because of the higher DataMiner version, the class library is present in a different branch. This must be selected in the DIS options: Class Library 1.1.0.1.
 
 ### Automation script requirements
 
@@ -88,7 +84,7 @@ Its main purpose is for use within large projects where inter-element or inter-a
 ## Getting started
 
 > [!NOTE]
-> An example protocol "SLC SDF Inter App Calls" is available in the Protocol Development Guide Companion Files.
+> An example protocol "SLC SDF Inter App Calls" is available in the [Protocol Development Guide Companion Files](https://community.dataminer.services/documentation/protocol-development-guide-companion-files/).
 
 Begin by checking and applying everything to meet the DataMiner, DIS, protocol and optional Automation script requirements.
 
@@ -101,7 +97,7 @@ Now there are 4 steps for development:
 
 ### Creating an API
 
-The first step is to create your API, with the classes that will represent your known messages. The name-space you make here needs to be present on both the source and destination of your communication channel. You can achieve this by:
+The first step is to create your API, with the classes that will represent your known messages. The namespace you make here needs to be present on both the source and destination of your communication channel. You can achieve this by:
 
 - Creating the API in a new solution and adding it as a community branch in the class library, or
 - Creating the API in a precompile QAction and copying it to where you need it.
@@ -229,6 +225,60 @@ public override Message CreateReturnMessage()
 > [!NOTE]
 > A return message does not necessarily need to be something to send to an external destination. A message could also be part of an internal API used to move data between classes, methods or QActions within your own protocol. This can also be returned.
 
+### Creating a simple executor
+
+As described above under [Creating an executor](#creating-an-executor), the executor will define how it should parse an incoming message and handle it. However, if you do not want or need to have such granular control over the individual steps and wish to have a more simplified executor, you can use the `SimpleMessageExecutor<T>` class to construct your message executor.
+
+You create it by making a new class that inherits from the `SimpleMessageExecutor<T>`, where T is a class from your messages defined in the API.
+
+> [!NOTE]
+> The API with classes of type SimpleMessageExecutor must be inside a precompile QAction.
+
+```csharp
+public class DeleteLineupExecutor : SimpleMessageExecutor<DeleteLineup>
+```
+
+The Visual Studio IDE will then assist you in correctly implementing your simple executor.
+
+![alt text](../../images/InterAppSimple_VS1.png "Executor implementation in Visual Studio")
+
+The simple executor has a single method (`TryExecute`) that will by default be called when a message is executed
+
+Default execute code (happens in background):
+
+```csharp
+return simpleMessageExecutor.TryExecute(dataSource, dataDestination, out optionalReturnMessage);
+```
+
+Some methods, like `DataSets` and `DataGets` of the standard message executor, have an object argument. This can be a custom class with data, a database object, `SLProtocol`, `Engine`, etc.
+
+The same is possible with the `TryExecute` method, where you will have a `dataSource` object that corresponds with the one you would encounter in the `DataGets` of the standard message executor and a `dataDestination` that corresponds with the one of the `DataSets` method.
+
+```csharp
+public override bool TryExecute(object dataSource, object dataDestination, out Message optionalReturnMessage)
+{
+    SLProtocol protocolSource = (SLProtocol)dataSource;
+    bool allowed = GetPermission(protocolSource);
+    if(!allowed)
+    {
+        optionalReturnMessage = null;
+        return false;
+    }
+
+    ...
+
+    optionalReturnMessage = new DeleteLineupResponse();
+
+    return true;
+}
+```
+
+> [!IMPORTANT]
+> The return message, if provided, must always have the same GUID as the received message that triggered the return in this case.
+
+> [!NOTE]
+> A return message does not necessarily need to be something to send to an external destination. A message could also be part of an internal API used to move data between classes, methods, or QActions within your own protocol. This can also be returned.
+
 ### Parsing a received call
 
 You can create a QAction that triggers on parameter clp_interApp_receive. This QAction will handle any incoming call. The code here will be easy as it uses a combination of the factory and command design patterns.
@@ -244,7 +294,7 @@ IInterAppCall receivedCall = InterAppCallFactory.CreateFromRaw(raw, knownTypes);
 > [!IMPORTANT]
 > It is not possible to receive both single messages and InterApp calls on the same parameter. We recommend just sticking to the InterApp call.
 
-From class library versions 1.2.2.1 and 1.1.4.1 onwards, internal reflection code is removed to support the use of NuGets. This makes the use of "knownTypes" mandatory.
+Internal reflection code is removed to support the use of NuGets. This makes the use of "knownTypes" mandatory.
 
 ```csharp
 List<Type> knownTypes = new List<Type> { typeof(DeleteLineup),typeof(DeleteLineupResult)};
@@ -268,7 +318,7 @@ Pass this serializer along to all your methods that need it (see [Custom seriali
 
 ### Executor triggering
 
-From class library versions 1.2.2.1 and 1.1.4.1 onwards, internal reflection code is removed to support the use of NuGets. This makes the use of a message to executor dictionary mandatory.
+Internal reflection code is removed to support the use of NuGets. This makes the use of a message to executor dictionary mandatory.
 
 The Execute methods take a dictionary where you provide the mapping. The key of the dictionary is the message type. The value of the dictionary is the executor type.
 
@@ -354,6 +404,9 @@ You then specify the parameter that you are expecting the return message to arri
 ```csharp
 myCommands.ReturnAddress = new ReturnAddress(152, 22, 9000001);
 ```
+
+> [!IMPORTANT]
+> The parameter selected with the *ReturnAddress* must not be on the source element (the parameter 9000001 on the destination element is recommended). If you use a parameter on the element you are sending from, you will cause deadlocks. This happens because the sending QAction waits on a response, but the response cannot be set to the parameter because there is a QAction running (i.e. the one waiting on the response).
 
 Now you create messages from your API.
 

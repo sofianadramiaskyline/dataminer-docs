@@ -4,15 +4,15 @@ uid: Hyperlinks_xml
 
 # Hyperlinks.xml
 
-In the file *Hyperlinks.xml*, you can define custom commands that will be displayed in the shortcut menu of the Alarm Console.
+In the file *Hyperlinks.xml*, you can [define custom commands](xref:Adding_a_custom_command_to_the_Alarm_Console_shortcut_menu) that will be displayed in the shortcut menu of the Alarm Console.
 
 DataMiner administrators will often create custom commands that open a web page, start an executable file or execute an Automation script.
 
+> [!NOTE]
+> When you make changes to *Hyperlinks.xml*, you should also force a synchronization of the file and reopen DataMiner Cube. For more details, see [Adding a custom command to the Alarm Console shortcut menu](xref:Adding_a_custom_command_to_the_Alarm_Console_shortcut_menu).
+
 > [!TIP]
-> See also:
->
-> - [Alarm Console – Extending the right-click menu](https://community.dataminer.services/video/alarm-console-extending-the-right-click-menu/) on DataMiner Dojo
-> - [Adding a custom command to the Alarm Console shortcut menu](xref:Adding_a_custom_command_to_the_Alarm_Console_shortcut_menu)
+> See also: [Alarm Console – Extending the right-click menu](https://community.dataminer.services/video/alarm-console-extending-the-right-click-menu/) on DataMiner Dojo ![Video](~/user-guide/images/video_Duo.png)
 
 ## File syntax
 
@@ -180,7 +180,7 @@ From DataMiner 10.0.12 onwards, it is possible to use a filter that checks wheth
 ```
 
 > [!NOTE]
-> The KeyExists filter is not recommended for data retrieval from Cassandra or Elasticsearch, as the filter will only be applied after data is retrieved from these databases.
+> The KeyExists filter is not recommended for data retrieval from Cassandra or an indexing database, as the filter will only be applied after data is retrieved from these databases.
 
 #### combineParameters
 

@@ -4,6 +4,9 @@ uid: Security_Elasticsearch
 
 # Securing the Elasticsearch database
 
+> [!TIP]
+> If you do not want the hassle of maintaining the DataMiner storage databases yourself, we recommend using [DataMiner Storage as a Service](xref:STaaS) instead.
+
 ## Authentication
 
 By default, Elasticsearch does **not** require authentication, which means anyone can access or alter the data. We therefore **highly recommend that you enable authentication** on your Elasticsearch cluster.
@@ -73,12 +76,14 @@ To configure TLS encryption for client-server communication:
 
 1. Request or generate a TLS certificate (the certificates should be in the PKCS#12 format). Make sure the IP address of the node is included in the *Subject Alternative Names* of the certificate.
 
+   Elasticsearch comes with the `elasticsearch-certutil` tool installed, which can be used to generate certificates. However, we recommend that you **use our [scripts for generating TLS certificates](https://github.com/SkylineCommunications/generate-tls-certificates)**, available on GitHub. There is a version of the script for Linux and Windows machines. The script requires two tools: *openssl* and the *Java keytool*. Both of these can run on Linux and Windows.
+
 1. Add the following lines to the *elasticsearch.yml* file:
 
    ```
    xpack.security.http.ssl.enabled: true
-   xpack.security.http.ssl.keystore.path: path/to/your/certificate
-   xpack.security.http.ssl.truststore.path: path/to/your/certificate
+   xpack.security.http.ssl.keystore.path: path/to/your/<NODE CERT STORE>
+   xpack.security.http.ssl.truststore.path: path/to/your/<NODE CERT STORE>
    ```
 
    If you are using a `.PEM` certificate generated using `openssl` utility, add the following lines to the *elasticsearch.yml* file instead:
@@ -93,12 +98,37 @@ To configure TLS encryption for client-server communication:
     of each node in cluster.
     ```
 
-1. Optionally, **for password-protected certificates**, execute the following commands **as Administrator** and enter the password when prompted:
+1. **For cert stores generated with the script or password-protected certificates**, execute the following commands **as Administrator** and enter the password when prompted:
 
    ```
    bin\elasticsearch-keystore add xpack.security.http.ssl.keystore.secure_password
    bin\elasticsearch-keystore add xpack.security.http.ssl.truststore.secure_password
    ```
+
+   For example, if you use Ubuntu, you can do so as follows:
+
+   1. Navigate to the bin folder using the following command:
+
+      ```bash
+      cd /usr/share/elasticsearch/bin
+      ```
+
+   1. Set the password for the keystore using the following command:
+
+      ```bash
+      sudo ./elasticsearch-keystore add xpack.security.http.ssl.keystore.secure_password
+      ```
+
+   1. Set the password for the truststore using the following command:
+
+      ```bash
+      sudo ./elasticsearch-keystore add xpack.security.http.ssl.truststore.secure_password
+      ```
+
+   > [!NOTE]
+   >
+   > - Depending on the flavor of operating system (Windows, Ubuntu, or another OS), the procedure can be different. Note that we generally recommend Ubuntu.
+   > - If the password needs to be updated, after you have run generate-tls-certificates again and acquired a new password for the keystore and truststore, you need to execute the commands above to set the keystore and truststore passwords in `/usr/share/elasticsearch/bin` again. These will overwrite the previous password.
 
 1. Start the *elasticsearch-service-x64* service and verify that you can connect with a browser to <https://FQDN:9200>.
 
@@ -113,6 +143,34 @@ To configure TLS encryption for client-server communication:
 
 > [!TIP]
 > To troubleshoot problems after enabling TLS encryption, consult the *SLSearch.txt* log file.
+
+### Troubleshooting
+
+#### Syntax error when executing the generate-certificates.sh script
+
+**Situation**: You have cloned the "Generate-TLS-Certificates" GitHub repository on a Windows machine, and have transferred the *generate-certificates.sh* file to a Linux machine using SCP. You have executed the following command:
+
+```bash
+sudo generate-certificates.sh
+```
+
+**Symptom**: Bash indicates that there are syntax errors in the script.
+
+**Resolution**: Convert the .sh file to Unix format.
+
+1. Begin by installing *dos2unix* with the following command:
+
+   ```bash
+   sudo apt install dos2unix
+   ```
+
+1. Next, run the following command:
+
+   ```bash
+   dos2unix generate-certificates.sh
+   ```
+
+   Once the conversion is complete, you can execute the script again.
 
 ## Inter-node TLS encryption
 
@@ -143,7 +201,7 @@ To configure TLS encryption for inter-node communication:
     of each node in cluster.
     ```
 
-1. If you secured the node's certificate with a password, add the password to your Elasticsearch keystore by executing the following commands:
+1. For cert stores generated with the script or if you secured the node's certificate with a password, add the password to your Elasticsearch keystore by executing the following commands:
 
    ```
    bin/elasticsearch-keystore add xpack.security.transport.ssl.keystore.secure_password

@@ -21,6 +21,9 @@ Example:
 > [!NOTE]
 > From DataMiner 10.2.0/10.1.6 onwards, the use of hostnames instead of IP addresses is supported in DMS.xml.
 
+> [!IMPORTANT]
+> Only some of the tags of DMS.xml are explained on this page, because the configuration in this file should ideally only ever be modified through DataMiner Cube (mainly via System Center > *Agents*).
+
 ## Attributes of the DMS tag
 
 | Attribute               | Description                                              | Default value |
@@ -34,7 +37,7 @@ Example:
 
 ## Redirects subtag
 
-From DataMiner 10.3.0/10.3.2 onwards, this subtag can be used to make the DMAs in a DMS communicate with each other over **gRPC** instead of .NET Remoting. Among others, this has the advantage that port 8004 is no longer needed. Instead the standard HTTPS port 443 is used by default. <!-- RN 34983 -->
+From DataMiner 10.3.0/10.3.2 onwards, this subtag can be used to make the DMAs in a DMS communicate with each other over **gRPC** instead of .NET Remoting. This uses the standard HTTPS port 443 by default. <!-- RN 34983 -->
 
 Redirects must be added in *DMS.xml* for each DMA. Failover Agents also need a redirect to each other's IP address.
 
@@ -69,7 +72,9 @@ For example, in a cluster with two DMAs, with IPs 10.4.2.92 and 10.4.2.93, DMS.x
 ```
 
 > [!NOTE]
-> The passwords in the *pwd* attribute are encrypted and replaced with an encryption token when they are first read out by DataMiner.
+>
+> - The passwords in the *pwd* attribute are encrypted and replaced with an encryption token when they are first read out by DataMiner.
+> - You can also disable .NET Remoting for inter-DMA communication in *MaintenanceSettings.xml* instead. See [Disabling .NET Remoting](xref:Configuration_of_DataMiner_processes#disabling-net-remoting).
 
 > [!TIP]
 > See also: [DataMiner hardening guide](xref:DataMiner_hardening_guide)

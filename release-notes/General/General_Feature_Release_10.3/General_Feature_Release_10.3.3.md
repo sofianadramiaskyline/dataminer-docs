@@ -18,6 +18,7 @@ uid: General_Feature_Release_10.3.3
 #### OpenSearch & Amazon OpenSearch Service [ID_34651]
 
 <!-- MR 10.3.0 - FR 10.3.3 -->
+<!-- See Cube RNs for System Center change -->
 
 It is now possible to install a dedicated OpenSearch indexing database cluster as an alternative for Elasticsearch. This indexing cluster also requires a Cassandra cluster.
 
@@ -202,15 +203,9 @@ From now on, when you zoom in or out, the data of the previous zoom level will s
 
 #### DataMiner upgrade: Installation of Microsoft .NET 6.0 [ID_35363]
 
-<!-- MR 10.4.0 - FR 10.3.3 -->
+<!-- MR 10.3.0 [CU3] - FR 10.3.3 -->
 
 During a DataMiner upgrade, Microsoft .NET 6.0 will now be installed if not installed already.
-
-#### Maps: Zoom range can now be set by means of a slider [ID_35381]
-
-<!-- MR 10.4.0 - FR 10.3.3 -->
-
-The zoom range of a map can now be set by means of a slider.
 
 #### SLSNMPAgent log entries will now include the alarm ID [ID_35404]
 
@@ -229,9 +224,6 @@ Example:
 <!-- MR 10.4.0 - FR 10.3.3 -->
 
 Because of a number of enhancements, overall performance has increased when fetching relation information for the automatic incident tracking feature.
-
-> [!NOTE]
-> Currently, the parameter relationship feature is still in preview.
 
 #### Service & Resource Management: Enhanced performance when changing active function files [ID_35424]
 
@@ -253,17 +245,11 @@ From now on, anomaly detection will no longer be available for discrete paramete
 
 Because of a number of enhancements, overall memory usage of the SLAutomation process has improved.
 
-#### Support for GQI queries from Data Aggregator with ad hoc data sources [ID_35526]
-
-<!-- MR 10.4.0 - FR 10.3.3 -->
-
-GQI now supports queries from [Data Aggregator](xref:Data_Aggregator_DxM) that use ad hoc data sources.
-
 ### Fixes
 
 #### Cassandra Cluster: Every DMA would incorrectly try to delete any possible old Cassandra compaction and repair tasks found in the entire DMS [ID_31923]
 
-<!-- MR 10.4.0 - FR 10.3.3 -->
+<!-- MR 10.2.0 [CU16]/10.3.0 [CU3] - FR 10.3.3 -->
 
 At start-up, every DataMiner Agent with a Cassandra Cluster configuration would incorrectly try to delete any possible old Cassandra compaction and repair tasks found in the entire DMS.
 
@@ -328,12 +314,6 @@ When run-time connections were being set up between agents or when a midnight sy
 If a DOM module is created without specifying *SecuritySettings*, the view permission is set to "None".
 
 Up to now, the check to determine whether a user had the view permission set to "None", would only return true for the Administrator or users in the Administrator group. From now on, when the required view permission is "None", permission checks will no longer be performed.
-
-#### NATSMaxPayloadException could be thrown when a client requested large amounts of data [ID_35306]
-
-<!-- MR 10.3.0 - FR 10.3.3 -->
-
-When a client requested large amounts of data, in some cases, a `NATSMaxPayloadException` could be thrown.
 
 #### External authentication via SAML: Issues fixed when using Okta as identity provider [ID_35374]
 
@@ -406,3 +386,9 @@ In some cases, two identical behavioral anomaly alarms would incorrectly be crea
 <!-- MR 10.2.0 [CU13]/10.3.0 [CU1] - FR 10.3.3 -->
 
 In some cases, an error could occur in the SLAnalytics process after a DVE parent element had been deleted.
+
+#### Cassandra Cluster: Rows would incorrectly be added without TTL value [ID_35789]
+
+<!-- MR 10.3.0 [CU0] - FR 10.3.3 [CU0] -->
+
+When a row was added to a Cassandra Cluster table, no TTL value would be inserted into the TTL column of that row.

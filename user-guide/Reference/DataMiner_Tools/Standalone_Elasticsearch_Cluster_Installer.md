@@ -1,8 +1,10 @@
 ---
 uid: Standalone_Elasticsearch_Cluster_Installer
 ---
-
 # Standalone Elasticsearch Cluster Installer
+
+> [!NOTE]
+> Elasticsearch is **only supported up to version 6.8**, which is no longer supported by Elastic. We therefore recommend using [Storage as a Service](xref:STaaS) instead, or if you do want to continue using self-hosted storage, using [OpenSearch](xref:OpenSearch_database).
 
 ## About this tool
 
@@ -17,6 +19,11 @@ You can download this tool from [DataMiner Dojo](https://community.dataminer.ser
 - Microsoft Windows
 
 - Server without existing Elasticsearch installation
+
+- Every DataMiner Agent in the DataMiner System needs to be connected to the new Elasticsearch cluster
+
+  > [!TIP]
+  > See [Manually connecting a DMA to an Elasticsearch cluster](xref:Manually_Connecting_DMA_to_Elasticsearch_Cluster).
 
 ## Configuration
 
