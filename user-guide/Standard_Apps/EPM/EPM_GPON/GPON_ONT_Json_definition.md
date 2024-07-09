@@ -1,10 +1,10 @@
 ---
-uid: GPON_ONT_Json_definition
+uid: xPON_ONT_Json_definition
 ---
 
-# Standard GPON EPM ONT JSON definition
+# Standard xPON EPM ONT JSON definition
 
-To be able to use the Kafka data stream properly in the EPM GPON solution, make sure your data is parsed in the following JSON format:
+To be able to use the Kafka data stream properly in the EPM xPON solution, make sure your data is parsed in the following JSON format:
 
 ```json
 {
@@ -27,7 +27,7 @@ To be able to use the Kafka data stream properly in the EPM GPON solution, make 
         "InternetGatewayDevice.WANDevice{i}WANPONInterfaceConfig.TransceiverTemperature": "54.97",
         "InternetGatewayDevice.WANDevice{i}WANPONInterfaceConfig.SupplyVoltage": "3.21",
         "InternetGatewayDevice.WANDevice{i}WANPONInterfaceConfig.TXPower": "2.51",
-        "InternetGatewayDevice.WANDevice{i}GponInterfaceConfig.Status": "Up",
+        "InternetGatewayDevice.WANDevice{i}xPONInterfaceConfig.Status": "Up",
         "InternetGatewayDevice.DeviceInfo.Description": "DESCRIPTION TEXT",
         "InternetGatewayDevice.DeviceInfo.SerialNumber": "ONT_SERIAL_NUMBER",
         "InternetGatewayDevice.DeviceInfo.MemUsed": "31",
